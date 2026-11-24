@@ -1,0 +1,70 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+  deployments: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+          tools: none
+      - name: Syntax check on the oldest supported PHP
+        run: sh .github/scripts/lint-php.sh
+      - name: Versions agree with the tag
+        run: sh .github/scripts/check-versions.sh "$GITHUB_REF_NAME"
+      # Clients download the WordPress plugin from the client area, so the release
+      # bundles the latest published plugin. Without one the release stops here.
+      - name: Fetch the latest WordPress plugin
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release download --repo ECHOCALL-LLC/echocall-wordpress --pattern echocall-chat-widget.zip --dir wp
+          unzip -Z1 wp/echocall-chat-widget.zip | grep -qx 'echocall-chat-widget/echocall-chat-widget.php'
+          gh release view --repo ECHOCALL-LLC/echocall-wordpress --json tagName --jq .tagName > wp/version.txt
+          echo "WordPress plugin $(cat wp/version.txt)"
+      - name: Build the module ZIP
+        run: |
+          sh .github/scripts/build-zip.sh wp/echocall-chat-widget.zip
+          unzip -Z1 build/echocall-whmcs.zip | grep -qx 'modules/servers/echocall/wordpress-plugin/echocall-chat-widget.zip'
+          unzip -Z1 build/echocall-whmcs.zip | grep -qx 'modules/servers/echocall/LICENSE'
+      # The notes are the section this version already has in the changelog.
+      - name: Cut the changelog section for this tag
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          awk -v header="## [$tag]" '
+            index($0, header) == 1 { printing = 1; next }
+            printing && index($0, "## [") == 1 { exit }
+            printing { print }
+          ' CHANGELOG.md > notes.md
+          if [ ! -s notes.md ]; then
+            echo "CHANGELOG.md has no section for $tag"
+            exit 1
+          fi
+          printf '\nBundles the EchoCall Chat Widget for WordPress %s.\n' "$(cat wp/version.txt)" >> notes.md
+      # The asset keeps the same name in every release, so
+      # releases/latest/download/echocall-whmcs.zip always serves the newest one.
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release create "$GITHUB_REF_NAME" build/echocall-whmcs.zip --verify-tag --title "$GITHUB_REF_NAME" --notes-file notes.md
+      # A published release is what people install, so the released commit is
+      # recorded as a production deployment. That is how the EchoCall team sees it as live.
+      - name: Record the release as live
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          id=$(jq -n --arg ref "$GITHUB_SHA" --arg description "release $GITHUB_REF_NAME" \
+            '{ref: $ref, environment: "production", description: $description, required_contexts: [], auto_merge: false, production_environment: true}' \
+            | gh api "repos/$GITHUB_REPOSITORY/deployments" --input - --jq .id)
+          gh api "repos/$GITHUB_REPOSITORY/deployments/$id/statuses" -f state=success -f environment=production -f description=Live --silent
+          echo "Deployment $id recorded for $GITHUB_SHA"

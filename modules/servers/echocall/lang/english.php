@@ -1,0 +1,130 @@
+<?php
+/**
+ * EchoCall module, English texts of the client area. Also the fallback for
+ * every key another language does not have.
+ *
+ * @package EchoCall
+ */
+
+if (!defined('WHMCS')) {
+    die('This file cannot be accessed directly.');
+}
+
+return [
+    'subtitle' => 'Voice agents, chatbots and phone numbers',
+    'open_portal' => 'Open in Portal',
+    'new_window' => '(opens in a new window)',
+    'nav_label' => 'Sections',
+    'nav_overview' => 'Overview',
+    'nav_agents' => 'Voice Agents',
+    'nav_chatbots' => 'Chatbots',
+    'nav_numbers' => 'Numbers',
+    'nav_integrations' => 'Integrations',
+    'nav_wordpress' => 'WordPress',
+    'counts_label' => 'Your setup',
+
+    'error_not_linked' => 'This service is not set up yet. Please contact support.',
+    'error_suspended' => 'Your account is suspended. Please contact support.',
+    'error_unreachable' => 'Your data cannot be loaded right now. Please try again in a few minutes.',
+    'error_generic' => 'That did not work. Please try again.',
+    'error_session' => 'Your session has expired. Please reload the page.',
+    'error_not_found' => 'This item no longer exists. Please reload the page.',
+    'error_agent_not_found' => 'This agent no longer exists. Please reload the page.',
+    'error_agent_not_ready' => 'This agent is not fully set up yet. Finish the setup in the Portal.',
+    'error_input' => 'Please check what you entered.',
+    'topup_eur_only' => 'Top ups by invoice are only available for accounts billed in euros.',
+    'topup_too_many' => 'Please pay your open top up invoices first.',
+
+    'status_inactive_title' => 'This service is not active right now',
+    'status_inactive_body' => 'Once it is active again, your agents, chatbots and numbers appear here.',
+
+    'saved' => 'Saved.',
+    'copy' => 'Copy',
+    'copied' => 'Copied.',
+    'save' => 'Save',
+    'add' => 'Add',
+    'delete' => 'Remove',
+    'pause' => 'Pause',
+    'activate' => 'Activate',
+    'status_active' => 'Active',
+    'status_paused' => 'Paused',
+    'status_connected' => 'Connected',
+    'status_off' => 'Off',
+
+    'balance' => 'Balance',
+    'balance_low' => 'Your balance is almost used up. Top up so calls and chats keep running.',
+    'topup_title' => 'Top Up Balance',
+    'topup_hint' => 'You get an invoice for the amount. Once it is paid, the credit is ready to use. All amounts are net.',
+    'topups_recent' => 'Recent Top Ups',
+    'invoice' => 'Invoice',
+    'topup_pending' => 'Open',
+    'topup_booking' => 'Being credited',
+    'topup_booked' => 'Credited',
+    'pay_invoice' => 'Pay',
+    'plan' => 'Plan',
+    'plan_payg' => 'Pay as you go',
+    'voice_remaining' => 'Included minutes left',
+    'chat_remaining' => 'Included chats left',
+    'upgrade' => 'Change Plan',
+    'usage_month' => 'This Month',
+    'voice_used' => 'Calls',
+    'chat_used' => 'Chats',
+    'unit_minutes' => 'min',
+    'unit_sessions' => 'chats',
+
+    'agents_hint' => 'Paused agents do not answer calls. Voice, flow and behaviour are set in the Portal.',
+    'agents_empty_title' => 'No Voice Agents Yet',
+    'agents_empty_body' => 'Create your first agent in the Portal. It shows up here right after.',
+    'knowledge' => 'Knowledge',
+
+    'chatbots_hint' => 'Paste the embed code right before the closing body tag of your website.',
+    'chatbots_empty_title' => 'No Chatbots Yet',
+    'chatbots_empty_body' => 'Create your first chatbot in the Portal. It shows up here right after.',
+    'chatbot_id' => 'ID',
+    'embed_code' => 'Embed Code',
+    'embed_label' => 'Embed code for your website',
+
+    'numbers_hint' => 'Choose which agent answers each number. New numbers are booked in the Portal.',
+    'numbers_empty_title' => 'No Numbers Yet',
+    'numbers_empty_body' => 'Book your first number in the Portal. Then you can give it to an agent here.',
+    'answered_by' => 'Answered by',
+    'no_agent' => 'Nobody',
+    'label' => 'Label',
+    'no_label' => 'No label',
+
+    'knowledge_of' => 'Knowledge of',
+    'knowledge_hint' => 'Add a web page your agent learns from. Reading it usually takes a few minutes.',
+    'knowledge_url' => 'Web page address',
+    'knowledge_untitled' => 'Untitled',
+    'knowledge_ready' => 'Ready',
+    'knowledge_pending' => 'Reading',
+    'knowledge_failed' => 'Failed',
+    'knowledge_delete_confirm' => 'Remove this item? The agent forgets this knowledge.',
+    'knowledge_added' => 'Added. Reading has started.',
+    'knowledge_deleted' => 'Removed.',
+    'knowledge_empty_title' => 'No Knowledge Yet',
+    'knowledge_empty_body' => 'Add the first web page above.',
+    'type_url' => 'Web page',
+    'type_file' => 'File',
+    'type_text' => 'Text',
+    'back_agents' => 'Back to Voice Agents',
+    'back_chatbots' => 'Back to Chatbots',
+
+    'integrations_hint' => 'Calendars, CRMs and other services are connected in the Portal.',
+    'integrations_empty_title' => 'No Integrations Yet',
+    'integrations_empty_body' => 'Connect your calendar or CRM in the Portal so your agents can use appointments and contacts.',
+
+    'wordpress_title' => 'Chatbot on WordPress',
+    'wordpress_hint' => 'The plugin puts your chatbot on your WordPress website without any code.',
+    'wordpress_step1' => 'Download the plugin. In WordPress, open Plugins, then Add New and Upload Plugin, and activate it.',
+    'wordpress_step2' => 'In the Portal, open Developer Portal and create an API key.',
+    'wordpress_step3' => 'In WordPress, open Settings, then EchoCall Chat, paste the key and press Load chatbots. The key is used only for this and is not saved.',
+    'wordpress_step4' => 'Choose your chatbot and save. It appears on every page, inside a page with the shortcode [echocall_chat] or as an Elementor widget.',
+    'wordpress_download' => 'Download Plugin',
+    'wordpress_requirements' => 'For WordPress 6.8 or later and PHP 7.4 or later, with an Elementor widget.',
+    'wordpress_chatbots' => 'Your Chatbots',
+    'wordpress_chatbots_hint' => 'The plugin offers these chatbots once you load the list. The shortcode places one of them inside a page.',
+    'wordpress_empty' => 'No chatbots yet. Create one in the Portal, then load the list in WordPress.',
+
+    'footer_portal' => 'New agents, voices, numbers and reports are in the Portal.',
+];

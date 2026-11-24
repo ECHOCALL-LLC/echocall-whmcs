@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" fill="none">
+  <!-- Soundwave bars -->
+  <rect x="4"  y="16" width="4" height="8"  rx="2" fill="#1d9bf0"/>
+  <rect x="10" y="10" width="4" height="20" rx="2" fill="#1d9bf0"/>
+  <rect x="16" y="6"  width="4" height="28" rx="2" fill="#1d9bf0"/>
+  <rect x="22" y="10" width="4" height="20" rx="2" fill="#1d9bf0"/>
+  <rect x="28" y="14" width="4" height="12" rx="2" fill="#1d9bf0"/>
+  <rect x="34" y="18" width="4" height="4"  rx="2" fill="#1d9bf0"/>
+  <!-- Wordmark -->
+  <text x="48" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" font-weight="700" fill="#1d9bf0">Echo</text>
+  <text x="92" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" font-weight="400" fill="#4b5563">Call</text>
+</svg>

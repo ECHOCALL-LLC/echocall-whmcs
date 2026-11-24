@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  # Every PHP version the module supports.
+  php:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.2', '8.3', '8.4']
+    steps:
+      - uses: actions/checkout@v7
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: none
+      - name: Syntax check
+        run: sh .github/scripts/lint-php.sh
+
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Versions agree
+        run: sh .github/scripts/check-versions.sh
+      - name: Build the module ZIP
+        run: sh .github/scripts/build-zip.sh
+      # The ZIP is extracted into the WHMCS root, so everything has to sit below modules/servers/echocall/.
+      - name: The ZIP holds the module and nothing else
+        run: |
+          unzip -Z1 build/echocall-whmcs.zip | sort > files.txt
+          cat files.txt
+          grep -qx 'modules/servers/echocall/echocall.php' files.txt
+          grep -qx 'modules/servers/echocall/hooks.php' files.txt
+          grep -qx 'modules/servers/echocall/LICENSE' files.txt
+          grep -qx 'modules/servers/echocall/templates/clientarea/main.tpl' files.txt
+          if grep -v -e '^modules/$' -e '^modules/servers/$' -e '^modules/servers/echocall/' files.txt; then
+            echo 'Files outside modules/servers/echocall/'
+            exit 1
+          fi

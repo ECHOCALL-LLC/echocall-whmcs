@@ -1,0 +1,9 @@
+/build/
+/wp/
+*.zip
+# The release adds the WordPress plugin here, it is never committed.
+/modules/servers/echocall/wordpress-plugin/
+.DS_Store
+Thumbs.db
+/vendor/
+/node_modules/

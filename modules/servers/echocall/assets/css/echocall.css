@@ -1,0 +1,672 @@
+/*
+ * EchoCall client area for WHMCS, module 2.0.0.
+ *
+ * Everything is scoped to .ec-root so the WHMCS theme around it stays
+ * untouched. The type face is inherited from the theme, so the module reads
+ * as part of the hoster's site. Colours come from the tokens below; the
+ * scheme is set on .ec-root by echocall.js (auto follows the page background)
+ * and is light without JavaScript.
+ *
+ * Contrast of every text token is at least 4.5:1 on its surface.
+ */
+
+.ec-root {
+    --ec-surface: #ffffff;
+    --ec-surface-2: #f5f5f7;
+    --ec-border: rgba(0, 0, 0, 0.12);
+    --ec-text: #1d1d1f;
+    --ec-text-2: #5f5f64;
+    --ec-link: #0066cc;
+    --ec-accent: #0071e3;
+    --ec-accent-text: #ffffff;
+    --ec-focus: #0071e3;
+    --ec-success: #1a7f37;
+    --ec-warning: #8a5c00;
+    --ec-danger: #c41e3a;
+    --ec-neutral: #5f5f64;
+    --ec-radius: 12px;
+    --ec-radius-small: 8px;
+    --ec-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+
+    color: var(--ec-text);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0 0 24px;
+    -webkit-text-size-adjust: 100%;
+}
+
+.ec-root[data-ec-scheme="dark"] {
+    --ec-surface: #1c1c1e;
+    --ec-surface-2: #2c2c2e;
+    --ec-border: rgba(255, 255, 255, 0.14);
+    --ec-text: #f5f5f7;
+    --ec-text-2: #a1a1a6;
+    --ec-link: #4da3ff;
+    --ec-accent: #0071e3;
+    --ec-accent-text: #ffffff;
+    --ec-focus: #4da3ff;
+    --ec-success: #32d74b;
+    --ec-warning: #ffd60a;
+    --ec-danger: #ff6961;
+    --ec-neutral: #a1a1a6;
+    --ec-shadow: none;
+    color-scheme: dark;
+}
+
+/*
+ * A fixed light or dark setting may differ from the theme around it, so the
+ * module then brings its own background. "auto" sits on the page as it is.
+ */
+.ec-root:not([data-ec-theme="auto"]) {
+    --ec-page: #fbfbfd;
+    background: var(--ec-page);
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.ec-root[data-ec-scheme="dark"]:not([data-ec-theme="auto"]) {
+    --ec-page: #111113;
+}
+
+.ec-root *,
+.ec-root *::before,
+.ec-root *::after {
+    box-sizing: border-box;
+}
+
+.ec-root h2,
+.ec-root h3,
+.ec-root h4,
+.ec-root p,
+.ec-root ul,
+.ec-root ol,
+.ec-root dl,
+.ec-root dd,
+.ec-root fieldset {
+    margin: 0;
+    padding: 0;
+}
+
+.ec-root ul {
+    list-style: none;
+}
+
+.ec-root fieldset {
+    border: 0;
+    min-width: 0;
+}
+
+.ec-root a {
+    color: var(--ec-link);
+}
+
+.ec-sr {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ── Header and navigation ─────────────────────────────────────────────── */
+
+.ec-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    margin-bottom: 16px;
+}
+
+.ec-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--ec-text);
+}
+
+.ec-subtitle {
+    color: var(--ec-text-2);
+    font-size: 0.9375rem;
+}
+
+.ec-nav {
+    margin-bottom: 24px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.ec-nav ul {
+    display: inline-flex;
+    gap: 4px;
+    padding: 4px;
+    background: var(--ec-surface-2);
+    border-radius: 999px;
+}
+
+.ec-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 16px;
+    border-radius: 999px;
+    color: var(--ec-text);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.ec-nav a:hover {
+    background: var(--ec-border);
+}
+
+.ec-nav a[aria-current="page"] {
+    background: var(--ec-surface);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    font-weight: 600;
+}
+
+/* ── Cards ──────────────────────────────────────────────────────────────── */
+
+.ec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.ec-card {
+    background: var(--ec-surface);
+    border: 1px solid var(--ec-border);
+    border-radius: var(--ec-radius);
+    box-shadow: var(--ec-shadow);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ec-card-label {
+    color: var(--ec-text-2);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.ec-card-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* The one figure the page is about. */
+.ec-balance-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+}
+
+.ec-balance {
+    grid-column: span 2;
+}
+
+@media (max-width: 560px) {
+    .ec-balance {
+        grid-column: auto;
+    }
+}
+
+.ec-topup legend {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.ec-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.ec-facts {
+    display: grid;
+    gap: 8px;
+}
+
+.ec-facts div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.ec-facts dt {
+    color: var(--ec-text-2);
+}
+
+.ec-facts dd {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+.ec-counts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.ec-counts a {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    min-height: 44px;
+    padding: 12px 16px;
+    background: var(--ec-surface-2);
+    border-radius: var(--ec-radius);
+    color: var(--ec-text);
+    text-decoration: none;
+}
+
+.ec-counts a:hover {
+    background: var(--ec-border);
+}
+
+.ec-count {
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ── Sections and lists ─────────────────────────────────────────────────── */
+
+.ec-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.ec-section-head {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ec-section h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--ec-text);
+}
+
+.ec-subhead {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.ec-list {
+    background: var(--ec-surface);
+    border: 1px solid var(--ec-border);
+    border-radius: var(--ec-radius);
+    overflow: hidden;
+}
+
+.ec-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 16px;
+    padding: 14px 16px;
+    min-height: 60px;
+}
+
+.ec-row + .ec-row {
+    border-top: 1px solid var(--ec-border);
+}
+
+.ec-row-main {
+    flex: 1 1 200px;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.ec-row-title {
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.ec-row-meta {
+    color: var(--ec-text-2);
+    font-size: 0.875rem;
+}
+
+.ec-row-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.ec-row-actions form {
+    margin: 0;
+}
+
+.ec-break {
+    word-break: break-all;
+}
+
+.ec-tabular {
+    font-variant-numeric: tabular-nums;
+}
+
+/* ── Pills ──────────────────────────────────────────────────────────────── */
+
+.ec-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.6;
+    white-space: nowrap;
+}
+
+/* The dot repeats the state in shape, so it never rests on colour alone. */
+.ec-pill::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.ec-pill-neutral::before {
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px currentColor;
+}
+
+.ec-pill-success { color: var(--ec-success); }
+.ec-pill-warning { color: var(--ec-warning); }
+.ec-pill-danger { color: var(--ec-danger); }
+.ec-pill-neutral { color: var(--ec-neutral); }
+
+/* ── Controls ───────────────────────────────────────────────────────────── */
+
+.ec-button,
+.ec-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1px solid var(--ec-border);
+    background: var(--ec-surface-2);
+    color: var(--ec-text);
+    font: inherit;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+
+.ec-button:hover,
+.ec-chip:hover {
+    background: var(--ec-border);
+    color: var(--ec-text);
+    text-decoration: none;
+}
+
+.ec-button-primary {
+    background: var(--ec-accent);
+    border-color: var(--ec-accent);
+    color: var(--ec-accent-text);
+    font-weight: 600;
+}
+
+.ec-button-primary:hover {
+    background: var(--ec-accent);
+    color: var(--ec-accent-text);
+    opacity: 0.88;
+}
+
+.ec-button-danger {
+    color: var(--ec-danger);
+}
+
+.ec-chip {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.ec-root [aria-busy="true"],
+.ec-root button:disabled {
+    opacity: 0.55;
+    cursor: progress;
+}
+
+.ec-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 500;
+}
+
+.ec-back {
+    align-self: flex-start;
+}
+
+.ec-inline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+.ec-inline label {
+    color: var(--ec-text-2);
+    font-size: 0.875rem;
+}
+
+.ec-inline-wide input[type="url"] {
+    flex: 1 1 260px;
+}
+
+.ec-root input[type="text"],
+.ec-root input[type="url"],
+.ec-root select,
+.ec-root textarea {
+    min-height: 44px;
+    padding: 8px 12px;
+    border: 1px solid var(--ec-border);
+    border-radius: var(--ec-radius-small);
+    background: var(--ec-surface);
+    color: var(--ec-text);
+    font: inherit;
+    font-size: 1rem;
+    max-width: 100%;
+}
+
+.ec-root textarea {
+    width: 100%;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.875rem;
+    resize: vertical;
+}
+
+.ec-code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.9375rem;
+    padding: 4px 10px;
+    border-radius: var(--ec-radius-small);
+    background: var(--ec-surface-2);
+    color: var(--ec-text);
+    user-select: all;
+}
+
+.ec-embed {
+    flex-basis: 100%;
+    display: grid;
+    gap: 8px;
+}
+
+.ec-embed[hidden] {
+    display: none;
+}
+
+.ec-embed label {
+    font-size: 0.875rem;
+    color: var(--ec-text-2);
+}
+
+.ec-embed .ec-button {
+    justify-self: start;
+}
+
+.ec-root :focus-visible {
+    outline: 3px solid var(--ec-focus);
+    outline-offset: 2px;
+}
+
+/* ── Notices, hints, empty states ───────────────────────────────────────── */
+
+.ec-hint {
+    color: var(--ec-text-2);
+    font-size: 0.875rem;
+}
+
+.ec-hint-warning {
+    color: var(--ec-warning);
+    font-weight: 500;
+}
+
+.ec-notice {
+    border-radius: var(--ec-radius);
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    border: 1px solid currentColor;
+}
+
+.ec-notice-danger {
+    color: var(--ec-danger);
+}
+
+.ec-notice p {
+    color: var(--ec-text);
+}
+
+.ec-empty {
+    text-align: center;
+    padding: 40px 24px;
+    background: var(--ec-surface-2);
+    border-radius: var(--ec-radius);
+    display: grid;
+    gap: 8px;
+    justify-items: center;
+}
+
+.ec-empty h3,
+.ec-empty h4 {
+    font-size: 1.0625rem;
+    font-weight: 600;
+}
+
+.ec-empty p {
+    color: var(--ec-text-2);
+    max-width: 46ch;
+}
+
+.ec-steps {
+    list-style: decimal;
+    padding-left: 1.5em;
+    display: grid;
+    gap: 8px;
+}
+
+.ec-steps li {
+    padding-left: 4px;
+}
+
+.ec-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    z-index: 1050;
+    max-width: min(480px, calc(100vw - 32px));
+    padding: 12px 20px;
+    border-radius: 999px;
+    background: var(--ec-text);
+    color: var(--ec-surface);
+    font-weight: 500;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.ec-toast[data-kind="error"] {
+    background: var(--ec-danger);
+    color: #ffffff;
+}
+
+.ec-root[data-ec-scheme="dark"] .ec-toast[data-kind="error"] {
+    background: #c41e3a;
+}
+
+.ec-toast[hidden] {
+    display: none;
+}
+
+.ec-footer {
+    margin-top: 8px;
+    color: var(--ec-text-2);
+    font-size: 0.875rem;
+}
+
+/* ── Preferences ────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+    .ec-root *,
+    .ec-root *::before,
+    .ec-root *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+@media (prefers-contrast: more) {
+    .ec-root {
+        --ec-border: currentColor;
+        --ec-text-2: var(--ec-text);
+    }
+}
+
+@media (forced-colors: active) {
+    .ec-button,
+    .ec-chip,
+    .ec-nav a[aria-current="page"],
+    .ec-card,
+    .ec-list {
+        border: 1px solid CanvasText;
+    }
+    .ec-pill::before {
+        forced-color-adjust: none;
+        background: CanvasText;
+    }
+}
